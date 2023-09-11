@@ -2,6 +2,7 @@ const $ = require("$");
 const util = require("./util"),
   COLOR = require("../color");
 const Clip = require("../clip");
+let clipList = [];
 function askInput() {
   $input.text({
     type: $kbType.text,
@@ -9,7 +10,24 @@ function askInput() {
     text: $.paste() || "",
     handler: text => {
       if ($.hasString(text)) {
-        Clip.addText(text);
+        const addResult = Clip.addText(text);
+        if (addResult.error === true) {
+          $ui.error("添加失败");
+          $console.error(addResult);
+        } else {
+          $ui.success("添加成功");
+          clipList = Clip.getClipList();
+          $ui.get("clipList").data = clipList.map(item => {
+            return {
+              labelTime: {
+                text: $.dateTime.timestampToTimeStr(item.create_time)
+              },
+              labelText: {
+                text: item.text
+              }
+            };
+          });
+        }
       }
     }
   });
@@ -58,8 +76,11 @@ function getClipItemTemplate() {
   return viewTemplate;
 }
 function getClipView() {
-  const clipList = Clip.getClipList(),
-    didSelect = (index, data) => {
+  clipList = Clip.getClipList();
+  $console.info({
+    getClipView: clipList
+  });
+  const didSelect = (index, data) => {
       $console.info(data);
       $.copy(clipList[index].text);
       $ui.success("Copied!");
@@ -72,27 +93,49 @@ function getClipView() {
         style: 1,
         estimatedRowHeight: 90, //每行高度
         template: getClipItemTemplate(),
-        data: clipList.map(item => {
-          return {
-            labelTime: {
-              text: $.dateTime.timestampToTimeStr(item.create_time)
-            },
-            labelText: {
-              text: item.text
-            }
-          };
-        }),
+        data:
+          clipList.length > 0
+            ? clipList.map(item => {
+                return {
+                  labelTime: {
+                    text: $.dateTime.timestampToTimeStr(item.create_time)
+                  },
+                  labelText: {
+                    text: item.text
+                  }
+                };
+              })
+            : [],
         actions: [
           {
             title: "delete",
             color: $color("gray"), // default to gray
             handler: function (sender, indexPath) {
-              $ui.get("clipList").data=clipList
+              const item = clipList[indexPath.row],
+                removeResult = Clip.removeItem({
+                  id: item.id
+                });
+              clipList = Clip.getClipList();
+              $ui.get("clipList").data = clipList.map(item => {
+                return {
+                  labelTime: {
+                    text: $.dateTime.timestampToTimeStr(item.create_time)
+                  },
+                  labelText: {
+                    text: item.text
+                  }
+                };
+              });
+              removeResult.success === true
+                ? $ui.success("删除成功")
+                : $ui.error("删除失败");
             }
           },
           {
-            title: "share",
-            handler: function (sender, indexPath) {}
+            title: "分享",
+            handler: function (sender, indexPath) {
+              $share.sheet([clipList[indexPath.row].text]);
+            }
           }
         ],
         header: {
@@ -142,7 +185,9 @@ function showView() {
       {
         title: "设置",
         icon: "gear",
-        func: () => {}
+        func: () => {
+          require("./config").showConfigView()
+        }
       }
     ],
     navData = navList.map(item => {
@@ -257,7 +302,15 @@ function showView() {
   });
 }
 function init() {
-  showView();
+  try {
+    $.startLoading();
+    Clip.init();
+    showView();
+  } catch (error) {
+    $console.error(error);
+  } finally {
+    $.stopLoading();
+  }
 }
 module.exports = {
   init
