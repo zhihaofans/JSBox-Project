@@ -75,7 +75,7 @@ function getClipItemTemplate() {
   };
   return viewTemplate;
 }
-function getClipView() {
+function getClipView(pluginLoader) {
   clipList = Clip.getClipList();
   $console.info({
     getClipView: clipList
@@ -132,9 +132,9 @@ function getClipView() {
             }
           },
           {
-            title: "分享",
+            title: "插件",
             handler: function (sender, indexPath) {
-              $share.sheet([clipList[indexPath.row].text]);
+              pluginLoader.showList(clipList[indexPath.row]);
             }
           }
         ],
@@ -167,7 +167,7 @@ function getClipView() {
   return viewData;
 }
 
-function showView() {
+function showView(app) {
   const navList = [
       {
         title: "剪切板",
@@ -178,15 +178,15 @@ function showView() {
         }
       },
       {
-        title: "快捷短语",
-        icon: "tag",
+        title: "插件",
+        icon: "command",
         func: () => {}
       },
       {
         title: "设置",
         icon: "gear",
         func: () => {
-          require("./config").showConfigView()
+          require("./config").showConfigView();
         }
       }
     ],
@@ -207,7 +207,7 @@ function showView() {
       };
     }),
     ViewData = [
-      getClipView(),
+      getClipView(app.PluginLoader),
       {
         type: "matrix",
         props: {
@@ -301,11 +301,11 @@ function showView() {
     ]
   });
 }
-function init() {
+function init(app) {
   try {
     $.startLoading();
     Clip.init();
-    showView();
+    showView(app);
   } catch (error) {
     $console.error(error);
   } finally {

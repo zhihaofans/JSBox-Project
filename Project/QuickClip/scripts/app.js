@@ -1,12 +1,19 @@
 const $ = require("$"),
   Next = require("Next"),
-  { AppKernel } = require("AppKernel");
+  { AppKernel } = require("AppKernel"),
+  PluginLoader = require("./plugin");
 class App extends AppKernel {
   constructor({ appId, appName, author }) {
-    super({ appId, appName, author,debug:true });
+    super({ appId, appName, author, debug: true });
+    this.PluginLoader = new PluginLoader();
   }
   init() {
-    require("./views/main").init();
+    this.PluginLoader.loadPluginList();
+    if ($.isKeyboardEnv()) {
+      require("./views/keyboard").init();
+    } else {
+      require("./views/main").init(this);
+    }
   }
 }
 function init() {
