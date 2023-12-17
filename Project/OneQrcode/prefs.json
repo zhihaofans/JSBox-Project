@@ -1,0 +1,25 @@
+{
+  "title": "设置",
+  "groups": [{
+    "title": "二维码",
+    "items": [{
+      "title": "扫码自动解析",
+      "type": "boolean",
+      "key": "qrcode.scan.auto_parse",
+      "value": false,
+    }]
+  },{
+    "title": "温馨提示",
+    "items": [{
+      "title": "长按二维码",
+      "type": "info",
+      "key": "tip.longclickqrcode",
+      "value": "能保存/分享二维码",
+    },{
+      "title": "点击左下角二维码按钮",
+      "type": "info",
+      "key": "tip.clickscanqrcode",
+      "value": "能扫码",
+    }]
+  }]
+}
