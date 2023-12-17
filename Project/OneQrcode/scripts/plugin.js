@@ -91,7 +91,7 @@ class PluginLoader {
         this.getPlugin(pluginItem).parse(text).then(resolve, reject);
       } catch (error) {
         $console.error(error);
-        reject();
+        reject(error);
       }
     });
   }

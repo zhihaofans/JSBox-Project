@@ -29,6 +29,7 @@ class MainView {
     this.Plugioader = app.PluginLoader;
     this.ParseCode = new ParseCore(this.App);
     this.QRCODE_TEXT =
+      $prefs.get("history.qrcodetext") ||
       "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg";
   }
   scanQrcode() {
@@ -54,8 +55,11 @@ class MainView {
     });
   }
   setQrcode(text) {
-    this.QRCODE_TEXT = text;
-    $ui.get("image_qrcode").data = $qrcode.encode(this.QRCODE_TEXT).png;
+    if ($.hasString(text)) {
+      $prefs.set("history.qrcodetext", text);
+      this.QRCODE_TEXT = text;
+      $ui.get("image_qrcode").data = $qrcode.encode(this.QRCODE_TEXT).png;
+    }
   }
   init() {
     const navList = [

@@ -15,14 +15,10 @@ class App extends AppKernel {
       const mainView = require("./main_view");
       new mainView(this).init();
       $console.info(`has rules:${this.RuleParse.hasRules()}`);
-      const matchLinkList = this.RuleParse.getLinkModList(
-        "https://qr.alipay.com/fkx18195si0ykoduaxzfi4e"
-      );
-      $console.info(matchLinkList);
     } catch (error) {
       $console.error(error);
     } finally {
-      $.info(`启动耗时${new Date().getTime() - this.START_TIME}ms`);
+      $console.info(`启动耗时${new Date().getTime() - this.START_TIME}ms`);
     }
   }
   initPluginList() {}

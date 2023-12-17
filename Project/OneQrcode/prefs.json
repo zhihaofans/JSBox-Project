@@ -8,14 +8,22 @@
       "key": "qrcode.scan.auto_parse",
       "value": false,
     }]
-  },{
+  }, {
+    "title": "历史记录",
+    "items": [{
+      "title": "上次二维码内容",
+      "type": "string",
+      "key": "history.qrcodetext",
+      "value": "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg",
+    }]
+  }, {
     "title": "温馨提示",
     "items": [{
       "title": "长按二维码",
       "type": "info",
       "key": "tip.longclickqrcode",
       "value": "能保存/分享二维码",
-    },{
+    }, {
       "title": "点击左下角二维码按钮",
       "type": "info",
       "key": "tip.clickscanqrcode",

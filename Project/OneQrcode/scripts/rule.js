@@ -14,35 +14,6 @@ class RuleParse {
       $.hasArray(this.PluginLoader.getPluginList())
     );
   }
-  getLinkModList(link) {
-    return this.PluginLoader.getPluginList().filter(pluginItem => {
-      $console.info(pluginItem);
-      if (pluginItem.hasFutureTag("regexp") && $.hasArray(pluginItem.REGEXP)) {
-        var match = false;
-        pluginItem.REGEXP.map(reg => {
-          if (new RegExp(reg).test(link)) {
-            match = true;
-          }
-        });
-        return match;
-      }
-      return pluginItem.hasFutureTag("parse_link") && $.isLink(link);
-    });
-  }
-  getTextModList(text) {
-    return this.PluginLoader.getPluginList().filter(pluginItem => {
-      if (pluginItem.hasFutureTag("regexp") && $.hasArray(pluginItem.REGEXP)) {
-        var match = false;
-        pluginItem.REGEXP.map(reg => {
-          if (new RegExp(reg).test(text)) {
-            match = true;
-          }
-        });
-        return match;
-      }
-      return pluginItem.hasFutureTag("parse_text") && $.hasString(text);
-    });
-  }
   getAllRules() {
     return this.PluginLoader.getPluginList();
   }
