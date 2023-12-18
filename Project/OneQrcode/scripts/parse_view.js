@@ -21,6 +21,7 @@ class ParseView {
                 const { section, row } = indexPath;
                 const pluginItem = pluginItemList[row];
                 this.PluginLoader.runPlugin(pluginItem, text);
+                $prefs.set("history.pluginname", pluginItem.NAME);
               }
             }
           }

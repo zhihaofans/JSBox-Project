@@ -15,6 +15,12 @@
       "type": "string",
       "key": "history.qrcodetext",
       "value": "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg",
+    }, {
+      "title": "上次使用插件",
+      "type": "info",
+      "key": "history.pluginname",
+      "value": "分享",
+      "inline": true
     }]
   }, {
     "title": "温馨提示",

@@ -11,7 +11,7 @@ class App extends AppKernel {
   }
   init() {
     try {
-      this.PluginLoader.loadPluginList()
+      this.PluginLoader.loadPluginList();
       const mainView = require("./main_view");
       new mainView(this).init();
       $console.info(`has rules:${this.RuleParse.hasRules()}`);

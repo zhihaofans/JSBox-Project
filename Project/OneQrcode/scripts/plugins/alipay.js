@@ -5,7 +5,9 @@ class AlipayApp {
   constructor() {}
   openUrl(url) {
     if ($.hasString(url)) {
-      const aliUrl = `alipays://platformapi/startapp?saId=10000007&qrcode=${$text.URLEncode(url)}`;
+      const aliUrl = `alipays://platformapi/startapp?saId=10000007&qrcode=${$text.URLEncode(
+        url
+      )}`;
       $console.info({
         aliUrl
       });
@@ -24,9 +26,7 @@ class AlipayParse {
     return new RegExp(regexp);
   }
   isPayQrcode(url) {
-    return this.getReg(/https:\/\/qr\.alipay\.com\/[A-Za-z0-9]+/).test(
-      url
-    );
+    return this.getReg(/https:\/\/qr\.alipay\.com\/[A-Za-z0-9]+/).test(url);
   }
 }
 class Example extends PluginCore {
@@ -58,7 +58,7 @@ class Example extends PluginCore {
           resolve();
           break;
         default:
-        $console.info("alipay:default");
+          $console.info("alipay:default");
           reject();
       }
     });

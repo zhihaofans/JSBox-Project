@@ -1,11 +1,11 @@
 try {
   let allLibNotNeedUpdate = true;
-//  const libCheckResult = libVersionCheck();
-//  Object.keys(libCheckResult).map(libId => {
-//    if (libCheckResult[libId] == false) {
-//      allLibNotNeedUpdate = false;
-//    }
-//  });
+  //  const libCheckResult = libVersionCheck();
+  //  Object.keys(libCheckResult).map(libId => {
+  //    if (libCheckResult[libId] == false) {
+  //      allLibNotNeedUpdate = false;
+  //    }
+  //  });
   if (allLibNotNeedUpdate == true) {
     require("./scripts/app").run();
   } else {
