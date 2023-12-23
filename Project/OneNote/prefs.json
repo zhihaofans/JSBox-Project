@@ -1,0 +1,32 @@
+{
+  "title": "设置",
+  "groups": [{
+    "title": "启动",
+    "items": [{
+      "title": "默认打开文件",
+      "type": "boolean",
+      "key": "app.default_open_file",
+      "value": true
+    }, {
+      "title": "默认打开编辑器",
+      "type": "boolean",
+      "key": "app.default_open_editor",
+      "value": false
+    }]
+  }, {
+    "title": "编辑器",
+    "items": [{
+      "title": "模式",
+      "type": "list",
+      "key": "editor.mode",
+      "items": ["纯文本", "MarkDown", "代码"],
+      "value": 0
+    }, {
+      "title": "字体大小",
+      "type": "integer",
+      "key": "editor.font.size",
+      "value": 12,
+      "inline": true
+    }]
+  }, ]
+}
