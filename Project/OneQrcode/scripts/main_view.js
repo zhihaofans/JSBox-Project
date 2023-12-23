@@ -62,6 +62,7 @@ class MainView {
     }
   }
   init() {
+    const autoScan = $prefs.get("qrcode.scan.on_run") === true;
     const navList = [
         {
           title: "二维码",
@@ -106,11 +107,17 @@ class MainView {
           }
         }
       };
-    viewUtil.showNavView({
-      title: "OneQrcode",
-      navList,
-      mainViewData: this.getEditTextView()
-    });
+    viewUtil
+      .showNavView({
+        title: "OneQrcode",
+        navList,
+        mainViewData: this.getEditTextView()
+      })
+      .then(sender => {
+        if (autoScan) {
+          this.scanQrcode();
+        }
+      });
   }
   getEditTextView() {
     return {
@@ -123,7 +130,38 @@ class MainView {
           type: "image",
           props: {
             id: "image_qrcode",
-            data: $qrcode.encode(this.QRCODE_TEXT).png
+            data: $qrcode.encode(this.QRCODE_TEXT).png,
+            menu: {
+              title: "二维码",
+              items: [
+                {
+                  title: "保存到相册",
+                  handler: sender => {
+                    $photo.save({
+                      data: $ui.get("image_qrcode").data,
+                      handler: success => {
+                        if (success) {
+                          $ui.success("保存成功");
+                        } else {
+                          $ui.error("保存失败");
+                        }
+                      }
+                    });
+                  }
+                },
+                {
+                  title: "分享",
+                  handler: sender => {
+                    $share.sheet([
+                      {
+                        "name": "qrcode.png",
+                        "data": $ui.get("image_qrcode").data
+                      }
+                    ]);
+                  }
+                }
+              ]
+            }
           },
           layout: (make, view) => {
             make.top.equalTo(50);

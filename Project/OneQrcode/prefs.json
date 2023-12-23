@@ -7,6 +7,11 @@
       "type": "boolean",
       "key": "qrcode.scan.auto_parse",
       "value": false,
+    }, {
+      "title": "启动时默认扫码",
+      "type": "boolean",
+      "key": "qrcode.scan.on_run",
+      "value": false,
     }]
   }, {
     "title": "历史记录",
