@@ -1,4 +1,7 @@
-const $ = require("$");
+const $ = require("$"),
+  _Future = require("./future"),
+  future = new _Future(),
+  FT = future.TAG;
 class PluginCore {
   constructor({ appKernel, id, name, icon, future_tag }) {
     this.App = appKernel;
@@ -20,13 +23,13 @@ class PluginItem {
     return $.hasArray(this.FUTURE_TAG) && this.FUTURE_TAG.includes(tag);
   }
   canLink() {
-    return this.hasFutureTag("parse_link");
+    return this.hasFutureTag(FT.PARSE_LINK);
   }
   canText() {
-    return this.hasFutureTag("parse_text");
+    return this.hasFutureTag(FT.PARSE_TEXT);
   }
   canRegexp() {
-    return this.hasFutureTag("regexp");
+    return this.hasFutureTag(FT.REGEXP);
   }
 }
 class PluginLoader {

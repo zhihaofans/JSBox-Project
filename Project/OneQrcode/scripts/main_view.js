@@ -6,10 +6,10 @@ class ParseCore {
     this.RuleParse = app.RuleParse;
     this.PluginLoader = app.PluginLoader;
   }
-  parse(text) {
+  parse(text, scanMode = false) {
     const parseView = require("./parse_view");
     $console.info(text);
-    this.RuleParse.parse(text)
+    this.RuleParse.parse(text, scanMode)
       .then(result => {
         $ui.success("解析成功");
         $console.info({
@@ -40,7 +40,7 @@ class MainView {
         this.setQrcode(text);
         if (autoParse) {
           $ui.success("扫描成功");
-          this.ParseCode.parse(text);
+          this.ParseCode.parse(text, true);
         } else {
           $input.text({
             type: $kbType.text,

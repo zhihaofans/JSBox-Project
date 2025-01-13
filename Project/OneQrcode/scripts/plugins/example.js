@@ -1,5 +1,8 @@
 const $ = require("$"),
-  { PluginCore } = require("../plugin");
+  { PluginCore } = require("../plugin"),
+  _Future = require("../future"),
+  future = new _Future(),
+  futureTag = future.TAG;
 //{ Http, Storage } = require("Next");
 class Example extends PluginCore {
   constructor(appKernel) {
@@ -8,7 +11,7 @@ class Example extends PluginCore {
       id: "example",
       name: "例子",
       icon: "command",
-      future_tag: ["icon_name", "parse_link"]
+      future_tag: [futureTag.ICON_NAME, futureTag.PARSE_LINK]
     });
     this.REGEXP = [/https:\/\/qr\.alipay\.com\/[A-Za-z0-9]+/];
   }
